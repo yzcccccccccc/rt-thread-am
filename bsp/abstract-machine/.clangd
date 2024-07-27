@@ -1,0 +1,11 @@
+{
+  "CompileFlags": {
+    "Add": [
+        "-I/home/yzcc/ysyx-workbench/rt-thread-am/bsp/abstract-machine/include",
+        "-I/home/yzcc/ysyx-workbench/rt-thread-am/include",
+        "-I/home/yzcc/ysyx-workbench/rt-thread-am/bsp/abstract-machine/rtconfig.h",
+        "-I/home/yzcc/ysyx-workbench/abstract-machine/klib/include",
+        "-I/home/yzcc/ysyx-workbench/abstract-machine/am/include"
+    ]
+  }
+}

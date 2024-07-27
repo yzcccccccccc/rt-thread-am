@@ -1,5 +1,4 @@
 ARCH ?= native
-AM_APPS_MK = build/${ARCH}/am-apps.mk
 FILE_MK = files.mk
 FILE_TMP = .tmp.$(FILE_MK)
 RTCONFIG_H = rtconfig.h
@@ -8,9 +7,14 @@ NAME = rtthread
 SRCS = $(shell find src -name "*.c")
 CFLAGS += -DHAVE_CCONFIG_H -D__RTTHREAD__
 CFLAGS += -Wno-nonnull-compare
+ifeq ($(ARCH), riscv32e-ysyxsoc)
+LDFLAGS += -T extra-ysyxsoc.ld
+else
 LDFLAGS += -T extra.ld
+endif
+
 -include $(FILE_MK)
--include $(AM_APPS_MK)
+-include am-apps.mk
 include $(AM_HOME)/Makefile
 
 $(RTCONFIG_H):
@@ -30,11 +34,7 @@ menuconfig:
 	scons --genconfig
 	$(MAKE) init
 
-ifneq ($(MAKECMDGOALS),clean)
-update: $(AM_APPS_MK)
-$(AM_APPS_MK): integrate-am-apps.py
-	mkdir -p $(@D)
-	python3 $^ ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
-endif
+update:
+	python3 integrate-am-apps.py ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
 
-.PHONY: init menuconfig update
+.PHONY: init menuconfig
