@@ -10,7 +10,11 @@ CFLAGS += -Wno-nonnull-compare
 ifeq ($(ARCH), riscv32e-ysyxsoc)
 LDFLAGS += -T extra-ysyxsoc.ld
 else
+ifeq ($(ARCH), riscv32i-ysyxsoc)
+LDFLAGS += -T extra-ysyxsoc.ld
+else
 LDFLAGS += -T extra.ld
+endif
 endif
 
 -include $(FILE_MK)
