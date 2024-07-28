@@ -7,14 +7,16 @@ NAME = rtthread
 SRCS = $(shell find src -name "*.c")
 CFLAGS += -DHAVE_CCONFIG_H -D__RTTHREAD__
 CFLAGS += -Wno-nonnull-compare
+
+MEM_LINKER = $(AM_HOME)/scripts/linker-mem.ld
 ifeq ($(ARCH), riscv32e-ysyxsoc)
-LDFLAGS += -T extra-ysyxsoc.ld
+	LDFLAGS += -T $(MEM_LINKER) -T extra-ysyxsoc.ld
 else
-ifeq ($(ARCH), riscv32i-ysyxsoc)
-LDFLAGS += -T extra-ysyxsoc.ld
-else
-LDFLAGS += -T extra.ld
-endif
+	ifeq ($(ARCH), riscv32i-ysyxsoc)
+		LDFLAGS += -T $(MEM_LINKER) -T extra-ysyxsoc.ld
+	else
+		LDFLAGS += -T extra.ld
+	endif
 endif
 
 -include $(FILE_MK)

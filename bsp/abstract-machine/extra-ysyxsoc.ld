@@ -1,5 +1,3 @@
-INCLUDE "/home/yzcc/ysyx-workbench/abstract-machine/scripts/linker-mem.ld"
-
 SECTIONS {
   .data.extra : ALIGN(8) {
     . = ALIGN(8);
